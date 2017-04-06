@@ -48,16 +48,21 @@ public class Transport {
             URL urlas = new URL(url);
             http = (HttpURLConnection) urlas.openConnection();
             http.setRequestMethod("GET");
+            BufferedReader reader;
+            InputStream is;
             if (data_user !=null && data_pass !=null){
                 http.addRequestProperty("request_user", data_user);
                 http.addRequestProperty("request_pass", data_pass);
             }
             int responseCode = http.getResponseCode();
-            if (responseCode == 200){
-                r = "teisingas";
-            }else{
-                r = "neteisingas";
+            is = http.getInputStream();
+            reader = new BufferedReader(new InputStreamReader(is));
+            String line = "";
+            while ((line = reader.readLine()) !=null){
+                r += line;
             }
+            reader.close();
+            http.disconnect();
         } catch (MalformedURLException e) {
             e.printStackTrace();
         } catch (ProtocolException e) {

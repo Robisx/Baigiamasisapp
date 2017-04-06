@@ -6,26 +6,26 @@ package com.example.user1.entities;
 
 public class Vartotojas {
     int id;
-    String vartotojo_pav;
+    String vartotojopav;
     String slaptazodis;
     String vardas;
     String pavarde;
-    String el_pastas;
+    String elPastas;
     String amzius;
     String telefonas;
 
     public Vartotojas() {
     }
 
-    public Vartotojas(int id, String telefonas, String amzius, String el_pastas, String pavarde, String vardas, String slaptazodis, String vartotojo_pav) {
+    public Vartotojas(int id, String vartotojopav, String slaptazodis, String vardas, String pavarde, String elPastas, String amzius, String telefonas) {
         this.id = id;
-        this.telefonas = telefonas;
-        this.amzius = amzius;
-        this.el_pastas = el_pastas;
-        this.pavarde = pavarde;
-        this.vardas = vardas;
+        this.vartotojopav = vartotojopav;
         this.slaptazodis = slaptazodis;
-        this.vartotojo_pav = vartotojo_pav;
+        this.vardas = vardas;
+        this.pavarde = pavarde;
+        this.elPastas = elPastas;
+        this.amzius = amzius;
+        this.telefonas = telefonas;
     }
 
     public int getId() {
@@ -36,44 +36,12 @@ public class Vartotojas {
         this.id = id;
     }
 
-    public String getTelefonas() {
-        return telefonas;
+    public String getVartotojopav() {
+        return vartotojopav;
     }
 
-    public void setTelefonas(String telefonas) {
-        this.telefonas = telefonas;
-    }
-
-    public String getAmzius() {
-        return amzius;
-    }
-
-    public void setAmzius(String amzius) {
-        this.amzius = amzius;
-    }
-
-    public String getEl_pastas() {
-        return el_pastas;
-    }
-
-    public void setEl_pastas(String el_pastas) {
-        this.el_pastas = el_pastas;
-    }
-
-    public String getPavarde() {
-        return pavarde;
-    }
-
-    public void setPavarde(String pavarde) {
-        this.pavarde = pavarde;
-    }
-
-    public String getVardas() {
-        return vardas;
-    }
-
-    public void setVardas(String vardas) {
-        this.vardas = vardas;
+    public void setVartotojopav(String vartotojopav) {
+        this.vartotojopav = vartotojopav;
     }
 
     public String getSlaptazodis() {
@@ -84,11 +52,43 @@ public class Vartotojas {
         this.slaptazodis = slaptazodis;
     }
 
-    public String getVartotojo_pav() {
-        return vartotojo_pav;
+    public String getVardas() {
+        return vardas;
     }
 
-    public void setVartotojo_pav(String vartotojo_pav) {
-        this.vartotojo_pav = vartotojo_pav;
+    public void setVardas(String vardas) {
+        this.vardas = vardas;
+    }
+
+    public String getPavarde() {
+        return pavarde;
+    }
+
+    public void setPavarde(String pavarde) {
+        this.pavarde = pavarde;
+    }
+
+    public String getElPastas() {
+        return elPastas;
+    }
+
+    public void setElPastas(String elPastas) {
+        this.elPastas = elPastas;
+    }
+
+    public String getAmzius() {
+        return amzius;
+    }
+
+    public void setAmzius(String amzius) {
+        this.amzius = amzius;
+    }
+
+    public String getTelefonas() {
+        return telefonas;
+    }
+
+    public void setTelefonas(String telefonas) {
+        this.telefonas = telefonas;
     }
 }
