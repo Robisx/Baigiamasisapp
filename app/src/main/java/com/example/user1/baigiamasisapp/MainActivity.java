@@ -36,6 +36,15 @@ public class MainActivity extends AppCompatActivity {
                 new loginasync(userName.getText().toString(), passWord.getText().toString()).execute();
             }
         });
+
+        registracija.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, RegistracijaActivity.class);
+                startActivity(intent);
+            }
+        });
+
     }
     public class loginasync extends AsyncTask<String, Void, Vartotojas>{
         String s1;
@@ -49,8 +58,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Vartotojas vartotojases) {
             super.onPostExecute(vartotojases);
-            System.out.println(vartotojases.getVartotojopav());
-            if (vartotojases.getVartotojopav() != null){
+            if (vartotojases != null){
                 Intent intent = new Intent(MainActivity.this, PaskyraActivity.class);
                 startActivity(intent);
             }

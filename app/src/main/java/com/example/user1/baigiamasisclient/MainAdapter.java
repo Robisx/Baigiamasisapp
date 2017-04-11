@@ -5,6 +5,7 @@ import android.content.Context;
 import com.example.user1.baigiamasisapp.R;
 import com.example.user1.entities.Kategorija;
 import com.example.user1.entities.Vartotojas;
+import com.example.user1.entities.VartotojasJson;
 import com.example.user1.http.Transport;
 import com.google.gson.Gson;
 
@@ -43,5 +44,21 @@ public class MainAdapter {
         Gson gson = new Gson();
         var = gson.fromJson(Transport.authenticate(str_user, str_pass, url), Vartotojas.class);
         return var;
+    }
+    public void createVartotojas (String varvar, String sla, String var, String pav, String elp, String amz, String tel){
+        VartotojasJson v = new VartotojasJson();
+        v.setVartotojopav(varvar);
+        v.setSlaptazodis(sla);
+        v.setVardas(var);
+        v.setPavarde(pav);
+        v.setElPastas(elp);
+        v.setAmzius(amz);
+        v.setTelefonas(tel);
+        Gson gson = new Gson();
+        String json = gson.toJson(v);
+      //  System.out.println(json);
+        String url = this.context.getResources().getString(R.string.base_rest_urlas) +
+                this.context.getResources().getString(R.string.vartotojas_rest_urlas);
+        Transport.putJson(url, json);
     }
 }

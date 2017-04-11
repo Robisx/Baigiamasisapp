@@ -1,9 +1,11 @@
 package com.example.user1.http;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
@@ -28,7 +30,7 @@ public class Transport {
             is = http.getInputStream();
             reader = new BufferedReader(new InputStreamReader(is));
             String line = "";
-            while ((line = reader.readLine()) !=null){
+            while ((line = reader.readLine()) != null) {
                 r += line;
             }
             reader.close();
@@ -41,7 +43,8 @@ public class Transport {
         }
         return r;
     }
-    public static String authenticate (String data_user, String data_pass, String url){
+
+    public static String authenticate(String data_user, String data_pass, String url) {
         String r = "";
         HttpURLConnection http = null;
         try {
@@ -50,7 +53,7 @@ public class Transport {
             http.setRequestMethod("GET");
             BufferedReader reader;
             InputStream is;
-            if (data_user !=null && data_pass !=null){
+            if (data_user != null && data_pass != null) {
                 http.addRequestProperty("request_user", data_user);
                 http.addRequestProperty("request_pass", data_pass);
             }
@@ -58,7 +61,7 @@ public class Transport {
             is = http.getInputStream();
             reader = new BufferedReader(new InputStreamReader(is));
             String line = "";
-            while ((line = reader.readLine()) !=null){
+            while ((line = reader.readLine()) != null) {
                 r += line;
             }
             reader.close();
@@ -71,5 +74,31 @@ public class Transport {
             e.printStackTrace();
         }
         return r;
+    }
+
+    public static void putJson(String url, String json) {
+        HttpURLConnection http = null;
+        BufferedWriter bfw;
+        try {
+            URL urlas = new URL(url);
+            http = (HttpURLConnection) urlas.openConnection();
+            http.setDoOutput(true);
+            http.setRequestMethod("POST");
+            http.addRequestProperty("Content-Type", "application/json");
+            http.addRequestProperty("Accepted", "application/json");
+            bfw = new BufferedWriter(new OutputStreamWriter(http.getOutputStream(), "UTF-8"));
+            System.out.println(json);
+            bfw.write(json);
+            bfw.newLine();
+            bfw.close();
+            Integer i = http.getResponseCode();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            http.disconnect();
+
+        }
     }
 }
