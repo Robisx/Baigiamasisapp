@@ -10,4 +10,30 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.user1.baigiamasisapp.PaskyraActivity">
 
+    <Button
+        android:id="@+id/zymekliai"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:text="Mano Žymekliai"
+        android:layout_alignParentTop="true"
+        android:layout_alignStart="@+id/zemelapis"
+        android:layout_marginTop="60dp" />
+
+    <Button
+        android:id="@+id/zemelapis"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="38dp"
+        android:text="Žemėlapis"
+        android:layout_below="@+id/zymekliai"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:id="@+id/atsijungti"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="11dp"
+        android:text="Atsijungti" />
 </RelativeLayout>

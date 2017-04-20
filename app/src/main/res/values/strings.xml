@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Baigiamasisapp</string>
-    <string name="base_rest_urlas" translatable="false">http://192.168.1.202:8080/Baigiamasis_WebAPP/api/</string>
+    <string name="base_rest_urlas" translatable="false">http://192.168.247.1:8080/Baigiamasis_WebAPP/api/</string>
     <string name="kategoryja_rest_urlas" translatable="false">kategorija</string>
     <string name="vartotojas_rest_urlas" translatable="false">vartotojas</string>
+    <string name="title_activity_maps">Map</string>
 </resources>
