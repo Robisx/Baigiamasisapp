@@ -1,9 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.user1.baigiamasisapp.MarkerCreationActivity">
 
-</android.support.constraint.ConstraintLayout>
+    <EditText
+        android:id="@+id/Pavadinimas"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:layout_alignParentTop="true"
+        android:layout_alignStart="@+id/tAptasymas"
+        android:layout_marginTop="20dp" />
+
+    <EditText
+        android:id="@+id/tAptasymas"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:layout_marginTop="26dp"
+        android:layout_below="@+id/Pavadinimas"
+        android:layout_toEndOf="@+id/textView2"
+        android:layout_marginStart="31dp" />
+
+    <EditText
+        android:id="@+id/editText3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="23dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:layout_below="@+id/tAptasymas"
+        android:layout_alignStart="@+id/tAptasymas" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignTop="@+id/Pavadinimas"
+        android:layout_marginStart="25dp"
+        android:text="Pavadinimas"
+        android:layout_alignBottom="@+id/Pavadinimas" />
+
+    <TextView
+        android:id="@+id/textView9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/tAptasymas"
+        android:layout_alignStart="@+id/textView2"
+        android:layout_alignTop="@+id/tAptasymas"
+        android:text="Trumpas aprašymas"
+        android:layout_alignEnd="@+id/textView2" />
+
+    <TextView
+        android:id="@+id/textView10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Trumpas aprašymas"
+        android:layout_alignTop="@+id/editText3"
+        android:layout_alignBottom="@+id/editText3"
+        android:layout_alignStart="@+id/textView9"
+        android:layout_toStartOf="@+id/editText3" />
+</RelativeLayout>
