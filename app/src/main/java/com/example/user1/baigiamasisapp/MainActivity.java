@@ -1,18 +1,17 @@
 package com.example.user1.baigiamasisapp;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.LayoutInflater;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.user1.baigiamasisclient.MainAdapter;
 import com.example.user1.entities.Vartotojas;
-
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -49,7 +48,10 @@ public class MainActivity extends AppCompatActivity {
     public class loginasync extends AsyncTask<String, Void, Vartotojas>{
         String s1;
         String s2;
-
+        Context context = getApplicationContext();
+        CharSequence text = "Klaidingas vartotojo vardas arba slaptažodis";
+        CharSequence text2 = "Sveikiname prisijungus";
+        int duration = Toast.LENGTH_SHORT;
         public loginasync(String s1, String s2) {
             this.s1 = s1;
             this.s2 = s2;
@@ -61,7 +63,12 @@ public class MainActivity extends AppCompatActivity {
             if (vartotojases != null){
                 Intent intent = new Intent(MainActivity.this, PaskyraActivity.class);
                 startActivity(intent);
+                Toast.makeText(context, text2, duration).show();
+            } else {
+                Toast.makeText(context, text, duration).show();
             }
+
+
         }
 
         @Override

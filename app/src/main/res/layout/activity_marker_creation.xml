@@ -10,60 +10,90 @@
         android:id="@+id/Pavadinimas"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName"
         android:layout_alignParentTop="true"
-        android:layout_alignStart="@+id/tAptasymas"
-        android:layout_marginTop="20dp" />
+        android:layout_alignStart="@+id/tAprasymas"
+        android:layout_marginTop="20dp"
+        android:ems="10"
+        android:inputType="none" />
 
     <EditText
-        android:id="@+id/tAptasymas"
+        android:id="@+id/tAprasymas"
+        style="@style/Widget.AppCompat.EditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:layout_marginTop="26dp"
         android:layout_below="@+id/Pavadinimas"
+        android:layout_marginStart="31dp"
+        android:layout_marginTop="26dp"
         android:layout_toEndOf="@+id/textView2"
-        android:layout_marginStart="31dp" />
-
-    <EditText
-        android:id="@+id/editText3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="23dp"
         android:ems="10"
-        android:inputType="textPersonName"
-        android:layout_below="@+id/tAptasymas"
-        android:layout_alignStart="@+id/tAptasymas" />
+        android:inputType="textMultiLine"
+        android:singleLine="false" />
 
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/Pavadinimas"
         android:layout_alignParentStart="true"
         android:layout_alignTop="@+id/Pavadinimas"
         android:layout_marginStart="25dp"
-        android:text="Pavadinimas"
-        android:layout_alignBottom="@+id/Pavadinimas" />
+        android:text="Pavadinimas" />
 
     <TextView
         android:id="@+id/textView9"
-        android:layout_width="wrap_content"
+        android:layout_width="70dp"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/tAptasymas"
+        android:layout_alignBottom="@+id/tAprasymas"
         android:layout_alignStart="@+id/textView2"
-        android:layout_alignTop="@+id/tAptasymas"
-        android:text="Trumpas aprašymas"
-        android:layout_alignEnd="@+id/textView2" />
+        android:layout_alignTop="@+id/tAprasymas"
+        android:layout_toStartOf="@+id/tAprasymas"
+        android:text="Trumpas aprašymas" />
 
     <TextView
         android:id="@+id/textView10"
+        android:layout_width="70dp"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/textView9"
+        android:layout_below="@+id/tAprasymas"
+        android:layout_marginTop="20dp"
+        android:layout_toStartOf="@+id/tAprasymas"
+        android:text="Žymeklio tipas" />
+
+    <Spinner
+        android:id="@+id/spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/textView10"
+        android:layout_alignEnd="@+id/tAprasymas"
+        android:layout_alignStart="@+id/tAprasymas"
+        android:layout_alignTop="@+id/textView10" />
+
+    <Button
+        android:id="@+id/save"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Trumpas aprašymas"
-        android:layout_alignTop="@+id/editText3"
-        android:layout_alignBottom="@+id/editText3"
-        android:layout_alignStart="@+id/textView9"
-        android:layout_toStartOf="@+id/editText3" />
+        android:layout_below="@+id/textView10"
+        android:layout_marginTop="31dp"
+        android:layout_toEndOf="@+id/textView10"
+        android:text="Išsaugoti" />
+
+    <Button
+        android:id="@+id/camera"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/save"
+        android:layout_alignBottom="@+id/save"
+        android:layout_marginStart="19dp"
+        android:layout_toEndOf="@+id/save"
+        android:text="Camera" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_alignEnd="@+id/camera"
+        android:layout_below="@+id/save"
+        android:layout_marginTop="23dp"
+        app:srcCompat="@mipmap/ic_launcher" />
+
 </RelativeLayout>

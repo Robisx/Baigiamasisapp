@@ -27,11 +27,12 @@ public class MainAdapter {
     public List<Kategorija> getKategorijos() {
         List<Kategorija> cat = null;
         String url = this.context.getResources().getString(R.string.base_rest_urlas) +
-                this.context.getResources().getString(R.string.kategoryja_rest_urlas);
+                this.context.getResources().getString(R.string.kategorija_rest_urlas);
         String json = Transport.transport(url);
         Gson gson = new Gson();
         Kategorija[] katJsonArray = gson.fromJson(json, Kategorija[].class);
         cat = Arrays.asList(katJsonArray);
+        System.out.println(cat.get(0).getObjektoTipas());
         return cat;
     }
 

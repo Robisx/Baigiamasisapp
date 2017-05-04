@@ -7,15 +7,15 @@ package com.example.user1.entities;
 public class Kategorija {
     int id;
     String zymeklio_spalva;
-    String objekto_tipas;
+    String objektoTipas;
 
     public Kategorija() {
     }
 
-    public Kategorija(int id, String zymeklio_spalva, String objekto_tipas) {
+    public Kategorija(int id, String zymeklio_spalva, String objektoTipas) {
         this.id = id;
         this.zymeklio_spalva = zymeklio_spalva;
-        this.objekto_tipas = objekto_tipas;
+        this.objektoTipas = objektoTipas;
     }
 
     public int getId() {
@@ -34,11 +34,11 @@ public class Kategorija {
         this.zymeklio_spalva = zymeklio_spalva;
     }
 
-    public String getObjekto_tipas() {
-        return objekto_tipas;
+    public String getObjektoTipas() {
+        return objektoTipas;
     }
 
-    public void setObjekto_tipas(String objekto_tipas) {
-        this.objekto_tipas = objekto_tipas;
+    public void setObjektoTipas(String objektoTipas) {
+        this.objektoTipas = objektoTipas;
     }
 }
