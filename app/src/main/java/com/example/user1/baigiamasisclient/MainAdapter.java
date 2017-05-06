@@ -6,10 +6,12 @@ import com.example.user1.baigiamasisapp.R;
 import com.example.user1.entities.Kategorija;
 import com.example.user1.entities.Vartotojas;
 import com.example.user1.entities.VartotojasJson;
+import com.example.user1.entities.VietaJson;
 import com.example.user1.http.Transport;
 import com.google.gson.Gson;
 
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -60,6 +62,20 @@ public class MainAdapter {
       //  System.out.println(json);
         String url = this.context.getResources().getString(R.string.base_rest_urlas) +
                 this.context.getResources().getString(R.string.vartotojas_rest_urlas);
+        Transport.putJson(url, json);
+    }
+
+    public void createVieta(String vieta, String aprasymas, String koordinates) {
+        VietaJson v = new VietaJson();
+        v.setVieta(vieta);
+        v.setAprasymas(aprasymas);
+        v.setKoordinates(koordinates);
+        v.setData(new Date());
+        Gson gson = new Gson();
+        String json = gson.toJson(v);
+        System.out.println(json);
+        String url = this.context.getResources().getString(R.string.base_rest_urlas) +
+                this.context.getResources().getString(R.string.vieta_rest_urlas);
         Transport.putJson(url, json);
     }
 }

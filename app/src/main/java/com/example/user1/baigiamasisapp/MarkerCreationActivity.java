@@ -16,6 +16,7 @@ import android.widget.Spinner;
 import com.example.user1.baigiamasisclient.MainAdapter;
 import com.example.user1.entities.Kategorija;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,12 +27,14 @@ public class MarkerCreationActivity extends AppCompatActivity {
     private Spinner spinner;
     private Button save, camera;
     private ImageView image;
+    private byte[] bArray1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_marker_creation);
 
+        final Intent intent = getIntent();
 
         pav = (EditText) findViewById(R.id.Pavadinimas);
         apr = (EditText) findViewById(R.id.tAprasymas);
@@ -50,13 +53,25 @@ public class MarkerCreationActivity extends AppCompatActivity {
 
             }
         });
+        save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+                new addMarkerasync(pav.getText().toString(), apr.getText().toString()).execute();
+                Intent intent = new Intent(MarkerCreationActivity.this, MapsActivity.class);
+                startActivity(intent);
+            }
+        });
     }
+
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == CAMERA_REQUEST && resultCode == Activity.RESULT_OK) {
             Bitmap photo = (Bitmap) data.getExtras().get("data");
             image.setImageBitmap(photo);
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            photo.compress(Bitmap.CompressFormat.PNG, 100, bos);
+            bArray1 = bos.toByteArray();
         }
     }
 
@@ -80,5 +95,22 @@ public class MarkerCreationActivity extends AppCompatActivity {
 
             spinner.setAdapter(new ArrayAdapter<String>(MarkerCreationActivity.this, R.layout.support_simple_spinner_dropdown_item, listas));
         }
+    }
+
+    public class addMarkerasync extends AsyncTask<String[], Void, Void> {
+        String pav;
+        String apr;
+
+        public addMarkerasync(String pav, String apr) {
+            this.pav = pav;
+            this.apr = apr;
+        }
+
+        @Override
+        protected Void doInBackground(String[]... params) {
+            new MainAdapter(MarkerCreationActivity.this).createVieta(pav, apr, "kazkokios koordinates");
+            return null;
+        }
+
     }
 }
