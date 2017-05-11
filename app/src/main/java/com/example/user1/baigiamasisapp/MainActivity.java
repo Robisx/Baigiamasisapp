@@ -11,7 +11,9 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.user1.baigiamasisclient.MainAdapter;
+import com.example.user1.baigiamasisclient.UserSingleton;
 import com.example.user1.entities.Vartotojas;
+import com.example.user1.entities.Vartotojoid;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -61,6 +63,20 @@ public class MainActivity extends AppCompatActivity {
         protected void onPostExecute(Vartotojas vartotojases) {
             super.onPostExecute(vartotojases);
             if (vartotojases != null){
+                UserSingleton.getInstance().setId(vartotojases.getId());
+                UserSingleton.getInstance().setName(vartotojases.getVardas());
+
+                Vartotojoid krv = new Vartotojoid();
+                krv.setId(vartotojases.getId());
+                krv.setAmzius(Integer.parseInt(vartotojases.getAmzius()));
+                krv.setElPastas(vartotojases.getElPastas());
+                krv.setVardas(vartotojases.getVardas());
+                krv.setPavarde(vartotojases.getPavarde());
+                krv.setSlaptazodis(vartotojases.getSlaptazodis());
+                krv.setTelefonas(Integer.parseInt(vartotojases.getTelefonas()));
+                krv.setVartotojopav(vartotojases.getVartotojopav());
+
+                UserSingleton.getInstance().setVartotojas(krv);
                 Intent intent = new Intent(MainActivity.this, PaskyraActivity.class);
                 startActivity(intent);
                 Toast.makeText(context, text2, duration).show();

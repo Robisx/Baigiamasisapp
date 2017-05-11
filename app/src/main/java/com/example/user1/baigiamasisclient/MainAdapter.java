@@ -4,12 +4,14 @@ import android.content.Context;
 
 import com.example.user1.baigiamasisapp.R;
 import com.example.user1.entities.Kategorija;
+import com.example.user1.entities.Kategorijaid;
 import com.example.user1.entities.Vartotojas;
 import com.example.user1.entities.VartotojasJson;
 import com.example.user1.entities.VietaJson;
 import com.example.user1.http.Transport;
 import com.google.gson.Gson;
 
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -34,7 +36,6 @@ public class MainAdapter {
         Gson gson = new Gson();
         Kategorija[] katJsonArray = gson.fromJson(json, Kategorija[].class);
         cat = Arrays.asList(katJsonArray);
-        System.out.println(cat.get(0).getObjektoTipas());
         return cat;
     }
 
@@ -43,12 +44,12 @@ public class MainAdapter {
         String url = this.context.getResources().getString(R.string.base_rest_urlas) +
                 this.context.getResources().getString(R.string.vartotojas_rest_urlas);
         String json = Transport.authenticate(str_user, str_pass, url);
-        System.out.println(json);
         Gson gson = new Gson();
         var = gson.fromJson(Transport.authenticate(str_user, str_pass, url), Vartotojas.class);
         return var;
     }
-    public void createVartotojas (String varvar, String sla, String var, String pav, String elp, String amz, String tel){
+
+    public void createVartotojas(String varvar, String sla, String var, String pav, String elp, String amz, String tel) {
         VartotojasJson v = new VartotojasJson();
         v.setVartotojopav(varvar);
         v.setSlaptazodis(sla);
@@ -59,23 +60,39 @@ public class MainAdapter {
         v.setTelefonas(tel);
         Gson gson = new Gson();
         String json = gson.toJson(v);
-      //  System.out.println(json);
         String url = this.context.getResources().getString(R.string.base_rest_urlas) +
                 this.context.getResources().getString(R.string.vartotojas_rest_urlas);
         Transport.putJson(url, json);
     }
 
-    public void createVieta(String vieta, String aprasymas, String koordinates) {
+    public void createVieta(String vieta, String aprasymas, String koordinates, String kategorija) {
         VietaJson v = new VietaJson();
-        v.setVieta(vieta);
-        v.setAprasymas(aprasymas);
+        v.setPavadinimas(vieta);
+        v.setTrumpasaprasymas(aprasymas);
         v.setKoordinates(koordinates);
-        v.setData(new Date());
+        v.setSukurimoData(new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
+        System.out.println(v.getSukurimoData());
+        List<Kategorija> kategorijos = getKategorijos();
+        for (Kategorija k : kategorijos) {
+            if (k.getObjektoTipas().equalsIgnoreCase(kategorija)) {
+                System.out.println(k.getObjektoTipas());
+                System.out.println(kategorija);
+                System.out.println("praejo");
+                Kategorijaid krv = new Kategorijaid();
+                krv.setId(k.getId());
+                krv.setObjektoTipas(k.getObjektoTipas());
+                krv.setZymeklioSpalva(k.getZymeklioSpalva());
+                v.setKategorijaid(krv);
+                break;
+            }
+        }
+        v.setVartotojoid(UserSingleton.getInstance().getVartotojas());
+
         Gson gson = new Gson();
         String json = gson.toJson(v);
-        System.out.println(json);
         String url = this.context.getResources().getString(R.string.base_rest_urlas) +
                 this.context.getResources().getString(R.string.vieta_rest_urlas);
         Transport.putJson(url, json);
+        System.out.println(json);
     }
 }

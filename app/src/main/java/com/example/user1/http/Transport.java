@@ -11,8 +11,6 @@ import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
 
-import javax.net.ssl.HttpsURLConnection;
-
 /**
  * Created by User1 on 2017-04-05.
  */
@@ -87,7 +85,6 @@ public class Transport {
             http.addRequestProperty("Content-Type", "application/json");
             http.addRequestProperty("Accepted", "application/json");
             bfw = new BufferedWriter(new OutputStreamWriter(http.getOutputStream(), "UTF-8"));
-            System.out.println(json);
             bfw.write(json);
             bfw.newLine();
             bfw.close();

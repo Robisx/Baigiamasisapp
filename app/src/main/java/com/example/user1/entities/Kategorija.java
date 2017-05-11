@@ -6,7 +6,7 @@ package com.example.user1.entities;
 
 public class Kategorija {
     int id;
-    String zymeklio_spalva;
+    String zymeklioSpalva;
     String objektoTipas;
 
     public Kategorija() {
@@ -14,7 +14,7 @@ public class Kategorija {
 
     public Kategorija(int id, String zymeklio_spalva, String objektoTipas) {
         this.id = id;
-        this.zymeklio_spalva = zymeklio_spalva;
+        this.zymeklioSpalva = zymeklio_spalva;
         this.objektoTipas = objektoTipas;
     }
 
@@ -26,12 +26,12 @@ public class Kategorija {
         this.id = id;
     }
 
-    public String getZymeklio_spalva() {
-        return zymeklio_spalva;
+    public String getZymeklioSpalva() {
+        return zymeklioSpalva;
     }
 
-    public void setZymeklio_spalva(String zymeklio_spalva) {
-        this.zymeklio_spalva = zymeklio_spalva;
+    public void setZymeklioSpalva(String zymeklio_spalva) {
+        this.zymeklioSpalva = zymeklio_spalva;
     }
 
     public String getObjektoTipas() {

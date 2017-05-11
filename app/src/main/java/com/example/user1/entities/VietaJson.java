@@ -1,48 +1,36 @@
+
 package com.example.user1.entities;
 
-import java.util.Date;
-
-/**
- * Created by User1 on 2017-05-06.
- */
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
 public class VietaJson {
-    private String vieta;
-    private String aprasymas;
+
+    @SerializedName("kategorijaid")
+    @Expose
+    private Kategorijaid kategorijaid;
+    @SerializedName("koordinates")
+    @Expose
     private String koordinates;
-    private Date data;
+    @SerializedName("pavadinimas")
+    @Expose
+    private String pavadinimas;
+    @SerializedName("sukurimoData")
+    @Expose
+    private String sukurimoData;
+    @SerializedName("trumpasaprasymas")
+    @Expose
+    private String trumpasaprasymas;
+    @SerializedName("vartotojoid")
+    @Expose
+    private Vartotojoid vartotojoid;
 
-    public VietaJson(String vieta, String aprasymas, String koordinates) {
-        this.vieta = vieta;
-        this.aprasymas = aprasymas;
-        this.koordinates = koordinates;
+    public Kategorijaid getKategorijaid() {
+        return kategorijaid;
     }
 
-    public VietaJson() {
-    }
-
-    public Date getData() {
-        return data;
-    }
-
-    public void setData(Date data) {
-        this.data = data;
-    }
-
-    public String getVieta() {
-        return vieta;
-    }
-
-    public void setVieta(String vieta) {
-        this.vieta = vieta;
-    }
-
-    public String getAprasymas() {
-        return aprasymas;
-    }
-
-    public void setAprasymas(String aprasymas) {
-        this.aprasymas = aprasymas;
+    public void setKategorijaid(Kategorijaid kategorijaid) {
+        this.kategorijaid = kategorijaid;
     }
 
     public String getKoordinates() {
@@ -52,4 +40,37 @@ public class VietaJson {
     public void setKoordinates(String koordinates) {
         this.koordinates = koordinates;
     }
+
+    public String getPavadinimas() {
+        return pavadinimas;
+    }
+
+    public void setPavadinimas(String pavadinimas) {
+        this.pavadinimas = pavadinimas;
+    }
+
+    public String getSukurimoData() {
+        return sukurimoData;
+    }
+
+    public void setSukurimoData(String sukurimoData) {
+        this.sukurimoData = sukurimoData;
+    }
+
+    public String getTrumpasaprasymas() {
+        return trumpasaprasymas;
+    }
+
+    public void setTrumpasaprasymas(String trumpasaprasymas) {
+        this.trumpasaprasymas = trumpasaprasymas;
+    }
+
+    public Vartotojoid getVartotojoid() {
+        return vartotojoid;
+    }
+
+    public void setVartotojoid(Vartotojoid vartotojoid) {
+        this.vartotojoid = vartotojoid;
+    }
+
 }

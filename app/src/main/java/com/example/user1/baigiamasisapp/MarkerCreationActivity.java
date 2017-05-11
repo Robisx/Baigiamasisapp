@@ -7,6 +7,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -23,6 +24,7 @@ import java.util.List;
 public class MarkerCreationActivity extends AppCompatActivity {
 
     private static final int CAMERA_REQUEST = 1888;
+    Intent returnIntent;
     private EditText pav, apr;
     private Spinner spinner;
     private Button save, camera;
@@ -43,6 +45,7 @@ public class MarkerCreationActivity extends AppCompatActivity {
         camera = (Button) findViewById(R.id.camera);
         image = (ImageView) findViewById(R.id.imageView);
 
+        returnIntent = new Intent();
         new spinnerasync().execute();
 
         camera.setOnClickListener(new View.OnClickListener() {
@@ -53,13 +56,29 @@ public class MarkerCreationActivity extends AppCompatActivity {
 
             }
         });
+        Intent i = getIntent();
+        final String coord = i.getStringExtra("koordinates");
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                new addMarkerasync(pav.getText().toString(), apr.getText().toString()).execute();
-                Intent intent = new Intent(MarkerCreationActivity.this, MapsActivity.class);
-                startActivity(intent);
+
+                returnIntent.putExtra("Pavadinimas", pav.getText().toString());
+                returnIntent.putExtra("Aprasas", apr.getText().toString());
+                setResult(Activity.RESULT_OK, returnIntent);
+                finish();
+            }
+        });
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                returnIntent.putExtra("Kategorija", spinner.getItemAtPosition(position).toString());
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
             }
         });
     }
@@ -97,20 +116,4 @@ public class MarkerCreationActivity extends AppCompatActivity {
         }
     }
 
-    public class addMarkerasync extends AsyncTask<String[], Void, Void> {
-        String pav;
-        String apr;
-
-        public addMarkerasync(String pav, String apr) {
-            this.pav = pav;
-            this.apr = apr;
-        }
-
-        @Override
-        protected Void doInBackground(String[]... params) {
-            new MainAdapter(MarkerCreationActivity.this).createVieta(pav, apr, "kazkokios koordinates");
-            return null;
-        }
-
-    }
 }
