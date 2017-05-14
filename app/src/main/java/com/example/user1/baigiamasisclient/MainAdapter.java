@@ -65,12 +65,13 @@ public class MainAdapter {
         Transport.putJson(url, json);
     }
 
-    public void createVieta(String vieta, String aprasymas, String koordinates, String kategorija) {
+    public void createVieta(String vieta, String aprasymas, String koordinates, String kategorija, String pavei) {
         VietaJson v = new VietaJson();
         v.setPavadinimas(vieta);
         v.setTrumpasaprasymas(aprasymas);
         v.setKoordinates(koordinates);
         v.setSukurimoData(new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
+        v.setPaveiksliukas(pavei);
         System.out.println(v.getSukurimoData());
         List<Kategorija> kategorijos = getKategorijos();
         for (Kategorija k : kategorijos) {

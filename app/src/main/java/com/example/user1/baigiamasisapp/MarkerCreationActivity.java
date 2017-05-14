@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Base64;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -91,6 +92,9 @@ public class MarkerCreationActivity extends AppCompatActivity {
             ByteArrayOutputStream bos = new ByteArrayOutputStream();
             photo.compress(Bitmap.CompressFormat.PNG, 100, bos);
             bArray1 = bos.toByteArray();
+            //  returnIntent.putExtra("paveiksliukas", bArray1);
+            String b64 = Base64.encodeToString(bArray1, Base64.DEFAULT);
+            returnIntent.putExtra("paveiksliukas", b64);
         }
     }
 

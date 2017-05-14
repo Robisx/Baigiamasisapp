@@ -118,9 +118,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 String pav = (String) data.getExtras().get("Pavadinimas");
                 String apr = (String) data.getExtras().get("Aprasas");
                 String kat = (String) data.getExtras().get("Kategorija");
+                String pavei = (String) data.getExtras().get("paveiksliukas");
                 mapas.addMarker(new MarkerOptions().position(markeriocoord).title(pav).snippet(apr));
                 String coords = String.valueOf(markeriocoord.latitude) + ";" + String.valueOf(markeriocoord.longitude);
-                new addMarkerasync(pav, apr, coords, kat).execute();
+                new addMarkerasync(pav, apr, coords, kat, pavei).execute();
                 markeriocoord = null;
             }
     }
@@ -130,17 +131,19 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         String apr;
         String coord;
         String kat;
+        String pavei;
 
-        public addMarkerasync(String pav, String apr, String coord, String kat) {
+        public addMarkerasync(String pav, String apr, String coord, String kat, String pavei) {
             this.pav = pav;
             this.apr = apr;
             this.coord = coord;
             this.kat = kat;
+            this.pavei = pavei;
         }
 
         @Override
         protected Void doInBackground(String[]... params) {
-            new MainAdapter(MapsActivity.this).createVieta(pav, apr, coord, kat);
+            new MainAdapter(MapsActivity.this).createVieta(pav, apr, coord, kat, pavei);
 
             return null;
         }

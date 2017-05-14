@@ -6,6 +6,9 @@ import com.google.gson.annotations.SerializedName;
 
 public class VietaJson {
 
+    @SerializedName("id")
+    @Expose
+    private Integer id;
     @SerializedName("kategorijaid")
     @Expose
     private Kategorijaid kategorijaid;
@@ -15,6 +18,9 @@ public class VietaJson {
     @SerializedName("pavadinimas")
     @Expose
     private String pavadinimas;
+    @SerializedName("paveiksliukas")
+    @Expose
+    private String paveiksliukas;
     @SerializedName("sukurimoData")
     @Expose
     private String sukurimoData;
@@ -24,6 +30,14 @@ public class VietaJson {
     @SerializedName("vartotojoid")
     @Expose
     private Vartotojoid vartotojoid;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public Kategorijaid getKategorijaid() {
         return kategorijaid;
@@ -47,6 +61,14 @@ public class VietaJson {
 
     public void setPavadinimas(String pavadinimas) {
         this.pavadinimas = pavadinimas;
+    }
+
+    public String getPaveiksliukas() {
+        return paveiksliukas;
+    }
+
+    public void setPaveiksliukas(String paveiksliukas) {
+        this.paveiksliukas = paveiksliukas;
     }
 
     public String getSukurimoData() {
