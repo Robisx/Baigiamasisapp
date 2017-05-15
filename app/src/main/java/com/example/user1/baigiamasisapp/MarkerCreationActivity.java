@@ -95,6 +95,7 @@ public class MarkerCreationActivity extends AppCompatActivity {
             //  returnIntent.putExtra("paveiksliukas", bArray1);
             String b64 = Base64.encodeToString(bArray1, Base64.DEFAULT);
             returnIntent.putExtra("paveiksliukas", b64);
+            returnIntent.putExtra("icona", photo);
         }
     }
 

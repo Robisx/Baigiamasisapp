@@ -1,8 +1,10 @@
 package com.example.user1.baigiamasisapp;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
@@ -13,10 +15,13 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
 import com.example.user1.baigiamasisclient.MainAdapter;
+import com.example.user1.baigiamasisclient.MarkerSingleton;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import static com.google.android.gms.maps.GoogleMap.MAP_TYPE_HYBRID;
@@ -29,6 +34,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private GoogleMap mapas;
     private Spinner spineris;
     private LatLng markeriocoord;
+    private Bitmap icona;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +73,22 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 Intent intent = new Intent(MapsActivity.this, MarkerCreationActivity.class);
                 startActivityForResult(intent, 4096);
                 intent.putExtra("koordinates", latLng);
+
+            }
+        });
+        mapas.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+            Context context = getApplicationContext();
+            CharSequence text = "paspaudei inforamcija";
+
+            @Override
+            public void onInfoWindowClick(Marker marker) {
+
+                Intent intent = new Intent(MapsActivity.this, MarkerioPerziura.class);
+                intent.putExtra("pavadinimas", marker.getTitle());
+                intent.putExtra("aprasymas", marker.getSnippet().toString());
+                String image = (MarkerSingleton.getInstance().returnMarker(marker.getTitle(), marker.getSnippet()).getPaveiksliukas());
+                intent.putExtra("icona", image);
+                startActivity(intent);
 
             }
         });
@@ -119,7 +142,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 String apr = (String) data.getExtras().get("Aprasas");
                 String kat = (String) data.getExtras().get("Kategorija");
                 String pavei = (String) data.getExtras().get("paveiksliukas");
-                mapas.addMarker(new MarkerOptions().position(markeriocoord).title(pav).snippet(apr));
+                icona = (Bitmap) data.getExtras().get("icona");
+
+                mapas.addMarker(new MarkerOptions().position(markeriocoord).title(pav).snippet(apr).icon(BitmapDescriptorFactory.fromBitmap(icona)));
                 String coords = String.valueOf(markeriocoord.latitude) + ";" + String.valueOf(markeriocoord.longitude);
                 new addMarkerasync(pav, apr, coords, kat, pavei).execute();
                 markeriocoord = null;

@@ -88,7 +88,7 @@ public class MainAdapter {
             }
         }
         v.setVartotojoid(UserSingleton.getInstance().getVartotojas());
-
+        MarkerSingleton.getInstance().addMarker(v);
         Gson gson = new Gson();
         String json = gson.toJson(v);
         String url = this.context.getResources().getString(R.string.base_rest_urlas) +
