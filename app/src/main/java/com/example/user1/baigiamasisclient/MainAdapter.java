@@ -12,6 +12,7 @@ import com.example.user1.http.Transport;
 import com.google.gson.Gson;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -95,5 +96,21 @@ public class MainAdapter {
                 this.context.getResources().getString(R.string.vieta_rest_urlas);
         Transport.putJson(url, json);
         System.out.println(json);
+    }
+
+    public List<VietaJson> getVietos() {
+        List<VietaJson> result = null;
+        String url = this.context.getResources().getString(R.string.base_rest_urlas) +
+                this.context.getResources().getString(R.string.vieta_rest_urlas);
+        String json = Transport.transport(url);
+        Gson gson = new Gson();
+        VietaJson[] arr = gson.fromJson(json, VietaJson[].class);
+        result = new ArrayList<>(Arrays.asList(arr));
+        System.out.println(result.get(0).getTrumpasaprasymas());
+        System.out.println(result.get(0).getPavadinimas());
+        for (VietaJson v : result) {
+            MarkerSingleton.getInstance().addMarker(v);
+        }
+        return result;
     }
 }

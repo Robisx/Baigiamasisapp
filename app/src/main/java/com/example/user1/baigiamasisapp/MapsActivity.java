@@ -1,14 +1,18 @@
 package com.example.user1.baigiamasisapp;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
+import android.util.Base64;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -16,6 +20,7 @@ import android.widget.Spinner;
 
 import com.example.user1.baigiamasisclient.MainAdapter;
 import com.example.user1.baigiamasisclient.MarkerSingleton;
+import com.example.user1.entities.VietaJson;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -23,6 +28,8 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+
+import java.util.List;
 
 import static com.google.android.gms.maps.GoogleMap.MAP_TYPE_HYBRID;
 import static com.google.android.gms.maps.GoogleMap.MAP_TYPE_NORMAL;
@@ -57,14 +64,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mapas = googleMap;
-        updateMapType();
 
-        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION)
-                == PackageManager.PERMISSION_GRANTED
-                || ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION)
-                == PackageManager.PERMISSION_GRANTED) {
-            mapas.setMyLocationEnabled(true);
-        }
+        updateMapType();
+        System.out.println(ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION));
+        new loadMarkersAsync().execute();
+
+        ActivityCompat.requestPermissions(MapsActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 4095);
+
 
         mapas.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
             @Override
@@ -129,7 +135,33 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     protected void onResume() {
         super.onResume();
+        if (mapas != null) {
+            if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION)
+                    == PackageManager.PERMISSION_GRANTED
+                    || ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION)
+                    == PackageManager.PERMISSION_GRANTED) {
+                mapas.setMyLocationEnabled(true);
 
+            }
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        System.out.println(requestCode);
+        System.out.println(grantResults.length);
+        switch (requestCode) {
+            case 4095: {
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION)
+                            == PackageManager.PERMISSION_GRANTED) {
+                        mapas.setMyLocationEnabled(true);
+                    }
+                }
+            }
+        }
     }
 
     @Override
@@ -173,5 +205,31 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             return null;
         }
 
+    }
+
+    public class loadMarkersAsync extends AsyncTask<Void, Void, Void> {
+        @Override
+        protected Void doInBackground(Void... params) {
+            new MainAdapter(MapsActivity.this).getVietos();
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            List<VietaJson> r = MarkerSingleton.getInstance().getMarkers();
+            for (VietaJson v : r) {
+
+                String[] s = v.getKoordinates().split(";");
+                LatLng l = new LatLng(Double.valueOf(s[0]), Double.valueOf(s[1]));
+                Bitmap b = BitmapFactory.decodeByteArray(Base64.decode(v.getPaveiksliukas(), Base64.DEFAULT), 0, Base64.decode(v.getPaveiksliukas(), Base64.DEFAULT).length);
+
+                mapas.addMarker(
+                        new MarkerOptions().position(l)
+                                .title(v.getPavadinimas())
+                                .snippet(v.getTrumpasaprasymas())
+                                .icon(BitmapDescriptorFactory.fromBitmap(b)));
+            }
+        }
     }
 }
