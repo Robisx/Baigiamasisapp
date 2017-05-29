@@ -20,6 +20,7 @@ import android.widget.Spinner;
 
 import com.example.user1.baigiamasisclient.MainAdapter;
 import com.example.user1.baigiamasisclient.MarkerSingleton;
+import com.example.user1.entities.Kategorija;
 import com.example.user1.entities.VietaJson;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -29,6 +30,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.google.android.gms.maps.GoogleMap.MAP_TYPE_HYBRID;
@@ -39,19 +41,24 @@ import static com.google.android.gms.maps.GoogleMap.MAP_TYPE_TERRAIN;
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mapas;
-    private Spinner spineris;
+    private Spinner spineris, spinerisnomeradyn;
     private LatLng markeriocoord;
     private Bitmap icona;
+    private List<String> r = new ArrayList<>();
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        new loadCategoriesAsync().execute();
         setContentView(R.layout.bendras_map);
         spineris = (Spinner) findViewById(R.id.spinner);
+        spinerisnomeradyn = (Spinner) findViewById(R.id.spinner2);
+
         ArrayAdapter<String> adapter =
                 new ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item, MapTipai.getTipai());
         spineris.setAdapter(adapter);
+
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
@@ -66,11 +73,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mapas = googleMap;
 
         updateMapType();
-        System.out.println(ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION));
         new loadMarkersAsync().execute();
 
         ActivityCompat.requestPermissions(MapsActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 4095);
-
 
         mapas.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
             @Override
@@ -95,6 +100,106 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 String image = (MarkerSingleton.getInstance().returnMarker(marker.getTitle(), marker.getSnippet()).getPaveiksliukas());
                 intent.putExtra("icona", image);
                 startActivity(intent);
+
+            }
+        });
+        spinerisnomeradyn.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                List<VietaJson> r = MarkerSingleton.getInstance().getMarkers();
+                mapas.clear();
+                System.out.println(position);
+                switch (position) {
+                    case 0:
+
+                        for (VietaJson v : r) {
+
+                            String[] s = v.getKoordinates().split(";");
+                            LatLng l = new LatLng(Double.valueOf(s[0]), Double.valueOf(s[1]));
+                            Bitmap b = BitmapFactory.decodeByteArray(Base64.decode(v.getPaveiksliukas(), Base64.DEFAULT), 0, Base64.decode(v.getPaveiksliukas(), Base64.DEFAULT).length);
+
+                            mapas.addMarker(
+                                    new MarkerOptions().position(l)
+                                            .title(v.getPavadinimas())
+                                            .snippet(v.getTrumpasaprasymas())
+                                            .icon(BitmapDescriptorFactory.defaultMarker(Float.parseFloat(v.getKategorijaid().getZymeklioSpalva())))
+                            );
+                        }
+                        break;
+                    case 1:
+
+                        for (VietaJson v : r) {
+                            if (v.getKategorijaid().getObjektoTipas().equalsIgnoreCase("Paplūdimiai")) {
+                                String[] s = v.getKoordinates().split(";");
+                                LatLng l = new LatLng(Double.valueOf(s[0]), Double.valueOf(s[1]));
+                                Bitmap b = BitmapFactory.decodeByteArray(Base64.decode(v.getPaveiksliukas(), Base64.DEFAULT), 0, Base64.decode(v.getPaveiksliukas(), Base64.DEFAULT).length);
+
+                                mapas.addMarker(
+                                        new MarkerOptions().position(l)
+                                                .title(v.getPavadinimas())
+                                                .snippet(v.getTrumpasaprasymas())
+                                                .icon(BitmapDescriptorFactory.defaultMarker(Float.parseFloat(v.getKategorijaid().getZymeklioSpalva())))
+                                );
+                            }
+                        }
+                        break;
+                    case 2:
+
+                        for (VietaJson v : r) {
+                            if (v.getKategorijaid().getObjektoTipas().equalsIgnoreCase("Grybavietė")) {
+                                String[] s = v.getKoordinates().split(";");
+                                LatLng l = new LatLng(Double.valueOf(s[0]), Double.valueOf(s[1]));
+                                Bitmap b = BitmapFactory.decodeByteArray(Base64.decode(v.getPaveiksliukas(), Base64.DEFAULT), 0, Base64.decode(v.getPaveiksliukas(), Base64.DEFAULT).length);
+
+                                mapas.addMarker(
+                                        new MarkerOptions().position(l)
+                                                .title(v.getPavadinimas())
+                                                .snippet(v.getTrumpasaprasymas())
+                                                .icon(BitmapDescriptorFactory.defaultMarker(Float.parseFloat(v.getKategorijaid().getZymeklioSpalva())))
+                                );
+                            }
+                        }
+                        break;
+                    case 3:
+
+                        for (VietaJson v : r) {
+                            if (v.getKategorijaid().getObjektoTipas().equalsIgnoreCase("Žvejybos vieta")) {
+                                String[] s = v.getKoordinates().split(";");
+                                LatLng l = new LatLng(Double.valueOf(s[0]), Double.valueOf(s[1]));
+                                Bitmap b = BitmapFactory.decodeByteArray(Base64.decode(v.getPaveiksliukas(), Base64.DEFAULT), 0, Base64.decode(v.getPaveiksliukas(), Base64.DEFAULT).length);
+
+                                mapas.addMarker(
+                                        new MarkerOptions().position(l)
+                                                .title(v.getPavadinimas())
+                                                .snippet(v.getTrumpasaprasymas())
+                                                .icon(BitmapDescriptorFactory.defaultMarker(Float.parseFloat(v.getKategorijaid().getZymeklioSpalva())))
+                                );
+                            }
+                        }
+                        break;
+                    case 4:
+                        for (VietaJson v : r) {
+                            System.out.println(v.getKategorijaid().getObjektoTipas());
+                            if (v.getKategorijaid().getObjektoTipas().equalsIgnoreCase("Kempingas")) {
+                                String[] s = v.getKoordinates().split(";");
+                                LatLng l = new LatLng(Double.valueOf(s[0]), Double.valueOf(s[1]));
+                                Bitmap b = BitmapFactory.decodeByteArray(Base64.decode(v.getPaveiksliukas(), Base64.DEFAULT), 0, Base64.decode(v.getPaveiksliukas(), Base64.DEFAULT).length);
+
+                                mapas.addMarker(
+                                        new MarkerOptions().position(l)
+                                                .title(v.getPavadinimas())
+                                                .snippet(v.getTrumpasaprasymas())
+                                                .icon(BitmapDescriptorFactory.defaultMarker(Float.parseFloat(v.getKategorijaid().getZymeklioSpalva())))
+                                );
+                            }
+                        }
+                        break;
+
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
 
             }
         });
@@ -149,8 +254,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        System.out.println(requestCode);
-        System.out.println(grantResults.length);
         switch (requestCode) {
             case 4095: {
                 if (grantResults.length > 0
@@ -174,9 +277,19 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 String apr = (String) data.getExtras().get("Aprasas");
                 String kat = (String) data.getExtras().get("Kategorija");
                 String pavei = (String) data.getExtras().get("paveiksliukas");
+                String color = "";
+                System.out.println(kat);
                 icona = (Bitmap) data.getExtras().get("icona");
 
-                mapas.addMarker(new MarkerOptions().position(markeriocoord).title(pav).snippet(apr).icon(BitmapDescriptorFactory.fromBitmap(icona)));
+                for (Kategorija k : MarkerSingleton.getInstance().getKategorijos()) {
+                    System.out.println(k.getObjektoTipas());
+                    if (kat.equalsIgnoreCase(k.getObjektoTipas())) {
+                        color = k.getZymeklioSpalva();
+                        break;
+                    }
+                }
+
+                mapas.addMarker(new MarkerOptions().position(markeriocoord).title(pav).snippet(apr).icon(BitmapDescriptorFactory.defaultMarker(Float.parseFloat(color))));
                 String coords = String.valueOf(markeriocoord.latitude) + ";" + String.valueOf(markeriocoord.longitude);
                 new addMarkerasync(pav, apr, coords, kat, pavei).execute();
                 markeriocoord = null;
@@ -228,8 +341,29 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         new MarkerOptions().position(l)
                                 .title(v.getPavadinimas())
                                 .snippet(v.getTrumpasaprasymas())
-                                .icon(BitmapDescriptorFactory.fromBitmap(b)));
+                                .icon(BitmapDescriptorFactory.defaultMarker(Float.parseFloat(v.getKategorijaid().getZymeklioSpalva())))
+                );
             }
+        }
+    }
+
+    public class loadCategoriesAsync extends AsyncTask<Void, Void, List<Kategorija>> {
+        @Override
+        protected List<Kategorija> doInBackground(Void... params) {
+            return new MainAdapter(MapsActivity.this).getKategorijos();
+        }
+
+        @Override
+        protected void onPostExecute(List<Kategorija> kategorijaids) {
+            super.onPostExecute(kategorijaids);
+            MarkerSingleton.getInstance().setKategorijos(kategorijaids);
+            r.add("Visi");
+            for (Kategorija k : MarkerSingleton.getInstance().getKategorijos()) {
+                r.add(k.getObjektoTipas());
+            }
+            ArrayAdapter<String> adapternomeradyn =
+                    new ArrayAdapter<String>(MapsActivity.this, R.layout.support_simple_spinner_dropdown_item, r);
+            spinerisnomeradyn.setAdapter(adapternomeradyn);
         }
     }
 }

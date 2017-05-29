@@ -77,9 +77,6 @@ public class MainAdapter {
         List<Kategorija> kategorijos = getKategorijos();
         for (Kategorija k : kategorijos) {
             if (k.getObjektoTipas().equalsIgnoreCase(kategorija)) {
-                System.out.println(k.getObjektoTipas());
-                System.out.println(kategorija);
-                System.out.println("praejo");
                 Kategorijaid krv = new Kategorijaid();
                 krv.setId(k.getId());
                 krv.setObjektoTipas(k.getObjektoTipas());
@@ -106,8 +103,6 @@ public class MainAdapter {
         Gson gson = new Gson();
         VietaJson[] arr = gson.fromJson(json, VietaJson[].class);
         result = new ArrayList<>(Arrays.asList(arr));
-        System.out.println(result.get(0).getTrumpasaprasymas());
-        System.out.println(result.get(0).getPavadinimas());
         for (VietaJson v : result) {
             MarkerSingleton.getInstance().addMarker(v);
         }

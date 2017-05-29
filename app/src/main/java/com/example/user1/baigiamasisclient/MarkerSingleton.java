@@ -1,5 +1,6 @@
 package com.example.user1.baigiamasisclient;
 
+import com.example.user1.entities.Kategorija;
 import com.example.user1.entities.VietaJson;
 
 import java.util.ArrayList;
@@ -12,6 +13,7 @@ import java.util.List;
 public class MarkerSingleton {
     private static final MarkerSingleton ourInstance = new MarkerSingleton();
     private List<VietaJson> markers = new ArrayList<>();
+    private List<Kategorija> kategorijos = new ArrayList<>();
 
     private MarkerSingleton() {
     }
@@ -30,6 +32,14 @@ public class MarkerSingleton {
 
     public void addMarker(VietaJson marker) {
         markers.add(marker);
+    }
+
+    public List<Kategorija> getKategorijos() {
+        return kategorijos;
+    }
+
+    public void setKategorijos(List<Kategorija> kategorijos) {
+        this.kategorijos = kategorijos;
     }
 
     public VietaJson returnMarker(String name, String apr) {

@@ -92,7 +92,6 @@ public class MarkerCreationActivity extends AppCompatActivity {
             ByteArrayOutputStream bos = new ByteArrayOutputStream();
             photo.compress(Bitmap.CompressFormat.PNG, 100, bos);
             bArray1 = bos.toByteArray();
-            //  returnIntent.putExtra("paveiksliukas", bArray1);
             String b64 = Base64.encodeToString(bArray1, Base64.DEFAULT);
             returnIntent.putExtra("paveiksliukas", b64);
             returnIntent.putExtra("icona", photo);
