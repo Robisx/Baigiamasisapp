@@ -92,7 +92,7 @@ public class MainAdapter {
         String url = this.context.getResources().getString(R.string.base_rest_urlas) +
                 this.context.getResources().getString(R.string.vieta_rest_urlas);
         Transport.putJson(url, json);
-        System.out.println(json);
+
     }
 
     public List<VietaJson> getVietos() {

@@ -1,6 +1,7 @@
 package com.example.user1.baigiamasisapp;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
@@ -14,6 +15,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.example.user1.baigiamasisclient.MainAdapter;
 import com.example.user1.entities.Kategorija;
@@ -62,12 +64,24 @@ public class MarkerCreationActivity extends AppCompatActivity {
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Context context = getApplicationContext();
+                CharSequence text = "Neįrašytas pavadinimas";
+                CharSequence text2 = "Neįrašytas vietovės aprašymas";
+                int duration = Toast.LENGTH_SHORT;
+                if (!pav.equals("") && pav != null) {
+                    returnIntent.putExtra("Pavadinimas", pav.getText().toString());
+                } else {
+                    Toast.makeText(context, text, duration).show();
+                }
+                System.out.println(apr.getText() + "kazkoks bybys");
+                if ((!apr.getText().equals("") && apr != null) && (!pav.getText().equals("") && pav != null) && bArray1 != null) {
+                    returnIntent.putExtra("Aprasas", apr.getText().toString());
+                    setResult(Activity.RESULT_OK, returnIntent);
+                    finish();
+                } else {
+                    Toast.makeText(context, text2, duration).show();
+                }
 
-
-                returnIntent.putExtra("Pavadinimas", pav.getText().toString());
-                returnIntent.putExtra("Aprasas", apr.getText().toString());
-                setResult(Activity.RESULT_OK, returnIntent);
-                finish();
             }
         });
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -86,6 +100,9 @@ public class MarkerCreationActivity extends AppCompatActivity {
 
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Context context = getApplicationContext();
+        CharSequence text3 = "Trūksta vietovės nuotraukos";
+        int duration = Toast.LENGTH_SHORT;
         if (requestCode == CAMERA_REQUEST && resultCode == Activity.RESULT_OK) {
             Bitmap photo = (Bitmap) data.getExtras().get("data");
             image.setImageBitmap(photo);
@@ -93,7 +110,11 @@ public class MarkerCreationActivity extends AppCompatActivity {
             photo.compress(Bitmap.CompressFormat.PNG, 100, bos);
             bArray1 = bos.toByteArray();
             String b64 = Base64.encodeToString(bArray1, Base64.DEFAULT);
-            returnIntent.putExtra("paveiksliukas", b64);
+            if (b64 != null && !b64.equals("")) {
+                returnIntent.putExtra("paveiksliukas", b64);
+            } else {
+                Toast.makeText(context, text3, duration).show();
+            }
             returnIntent.putExtra("icona", photo);
         }
     }

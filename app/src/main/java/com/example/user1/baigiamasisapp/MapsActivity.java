@@ -17,6 +17,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.example.user1.baigiamasisclient.MainAdapter;
 import com.example.user1.baigiamasisclient.MarkerSingleton;
@@ -89,7 +90,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         });
         mapas.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
             Context context = getApplicationContext();
-            CharSequence text = "paspaudei inforamcija";
+
+            CharSequence text = "Peržiūra negalima";
+            int duration = Toast.LENGTH_SHORT;
 
             @Override
             public void onInfoWindowClick(Marker marker) {
@@ -98,9 +101,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 intent.putExtra("pavadinimas", marker.getTitle());
                 intent.putExtra("aprasymas", marker.getSnippet().toString());
                 String image = (MarkerSingleton.getInstance().returnMarker(marker.getTitle(), marker.getSnippet()).getPaveiksliukas());
+                if (image != null) {
                 intent.putExtra("icona", image);
-                startActivity(intent);
-
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(context, text, duration).show();
+                }
             }
         });
         spinerisnomeradyn.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -179,7 +185,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         break;
                     case 4:
                         for (VietaJson v : r) {
-                            System.out.println(v.getKategorijaid().getObjektoTipas());
                             if (v.getKategorijaid().getObjektoTipas().equalsIgnoreCase("Kempingas")) {
                                 String[] s = v.getKoordinates().split(";");
                                 LatLng l = new LatLng(Double.valueOf(s[0]), Double.valueOf(s[1]));
@@ -278,11 +283,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 String kat = (String) data.getExtras().get("Kategorija");
                 String pavei = (String) data.getExtras().get("paveiksliukas");
                 String color = "";
-                System.out.println(kat);
                 icona = (Bitmap) data.getExtras().get("icona");
 
                 for (Kategorija k : MarkerSingleton.getInstance().getKategorijos()) {
-                    System.out.println(k.getObjektoTipas());
                     if (kat.equalsIgnoreCase(k.getObjektoTipas())) {
                         color = k.getZymeklioSpalva();
                         break;

@@ -29,9 +29,7 @@ public class MarkerioPerziura extends AppCompatActivity {
         aprasas.setText(returnIntent.getStringExtra("aprasymas"));
         String image = returnIntent.getStringExtra("icona");
         //String image = MarkerSingleton.getInstance().returnMarker(pavadinimas.getText().toString(),aprasas.getText().toString()).getPaveiksliukas();
-        System.out.println(image);
         byte[] imageArray = Base64.decode(image, Base64.DEFAULT);
-        System.out.println(imageArray);
         paveikslas.setImageBitmap(BitmapFactory.decodeByteArray(imageArray, 0, imageArray.length));
 
     }
