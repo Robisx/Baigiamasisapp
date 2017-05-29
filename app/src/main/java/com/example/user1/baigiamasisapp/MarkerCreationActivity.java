@@ -73,7 +73,7 @@ public class MarkerCreationActivity extends AppCompatActivity {
                 } else {
                     Toast.makeText(context, text, duration).show();
                 }
-                System.out.println(apr.getText() + "kazkoks bybys");
+
                 if ((!apr.getText().equals("") && apr != null) && (!pav.getText().equals("") && pav != null) && bArray1 != null) {
                     returnIntent.putExtra("Aprasas", apr.getText().toString());
                     setResult(Activity.RESULT_OK, returnIntent);
